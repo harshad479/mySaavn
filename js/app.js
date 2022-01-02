@@ -38,33 +38,7 @@ function getJson() {
   xhttp.open("GET", "https://mysaavnapi.herokuapp.com/result/?query="+link, true);
   xhttp.send();
 }
-
-let track_list = [
-  {
-    name: mySongs[0].album,
-    artist: "Broke For Free",
-    image: mySongs[0].image,
-    path: mySongs[0].media_url
-  },
-  {
-    name: "Aankhon ki gusthakiya",
-    artist: "Tours",
-    image: "https://images.pexels.com/photos/3100835/pexels-photo-3100835.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
-    path: "https://sdlhivkecdnems05.cdnsrv.jio.com/jiosaavn.cdn.jio.com/362/c94bd60eabb30f8c8941f54455079c94_160.mp4"
-  },
-  {
-    name: "Aap ke aa jane se",
-    artist: "Chad Crouch",
-    image: "https://images.pexels.com/photos/1717969/pexels-photo-1717969.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
-    path: "https://sdlhivkecdnems03.cdnsrv.jio.com/jiosaavn.cdn.jio.com/705/c69b3554f089782027316fd8f8f7f862_160.mp4",
-  },
-  {
-    name: "Albela Sajan",
-    artist: "Chad Crouch",
-    image: "https://images.pexels.com/photos/1717969/pexels-photo-1717969.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
-    path: "https://sgdccdnems03.cdnsrv.jio.com/jiosaavn.cdn.jio.com/362/03e5b5fe4222ab557608fda2b8ca36a2_160.mp4",
-  },
-];
+getJson()
 
 function random_bg_color() {
 
