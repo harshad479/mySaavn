@@ -1,0 +1,20 @@
+{
+    "name": "My Saavn App",
+    "short_name": "MySaavnApp",
+    "start_url": ".",
+    "background_color": "#6dcdb1",
+    "theme_color": "#009578",
+    "display": "standalone",
+    "icons": [
+        {
+        "src":"/images/logo192.png",
+        "size":"192*192",
+        "tyep":"image/png"
+        },
+        {
+        "src":"/images/logo512.png",
+        "size":"512*512",
+        "tyep":"image/png"
+        }
+    ]
+}

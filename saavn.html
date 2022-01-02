@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<body onload="getJson()">
+
+  <div id="demo">
+    <h2>Let AJAX change this text</h2>
+    <button type="button" onclick="loadDoc()">Change Content</button>
+  </div>
+  <a href=""></a>
+</body>
+
+<script>
+  function getJson() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        //  document.getElementById("demo").innerHTML = this.responseText.songs;
+        myArray = this.responseText;
+        myJson = JSON.parse(myArray);
+        mySongs = myJson.songs;
+        // myJson.songs[0].media_url
+        // loadDoc();
+
+      }
+    };
+    // xhttp.open("GET", "https://mysaavnapi.herokuapp.com/result/?query=https://www.jiosaavn.com/s/playlist/fd15cad99c0fdf20e82c2bc80969d2fb/Starred_Songs/FvETLEV5fINFo9wdEAzFBA__", true);
+    xhttp.open("GET", "https://mysaavnapi.herokuapp.com/result/?query=https://www.jiosaavn.com/song/aankhon-ki-gustakhiyan/LwsuR0RxWHc", true);
+    xhttp.send();
+  }
+  function loadDoc() {
+    let text = "";
+    for (let i = 0; i < mySongs.length; i++) {
+      text += '<a href="' + mySongs[i].media_url + '">' + mySongs[i].album + "</a><br>";
+      // <a href=""></a>
+    }
+    document.getElementById("demo").innerHTML = text;
+  }
+</script>
+
+
+</html>
