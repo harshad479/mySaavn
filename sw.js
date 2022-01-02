@@ -1,10 +1,10 @@
 var cacheName = 'mySaavnApp';
 var filesToCache = [
-  '/',
-  '/index.html',
-  '/css/style.css',
-  '/js/app.js',
-  '/js/main.js'
+  './',
+  './index.html',
+  './css/style.css',
+  './js/app.js',
+  './js/main.js'
 ];
 
 /* Start the service worker and cache all of the app's content */
