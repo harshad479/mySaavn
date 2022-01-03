@@ -101,10 +101,12 @@ function mediaSessionStart() {
 
   navigator.mediaSession.setActionHandler('previoustrack', () => {
     prevTrack()
+    mediaSessionStart()
   });
 
   navigator.mediaSession.setActionHandler('nexttrack', () => {
     nextTrack()
+    mediaSessionStart()
   });
 }
 // ===================
