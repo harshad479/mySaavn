@@ -30,11 +30,12 @@ function getJson() {
       myJson = JSON.parse(myArray);
       mySongs = myJson.songs;
       loadTrack(track_index);
+      mediaSessionStart()
 
     }
   };
-  // xhttp.open("GET", "https://mysaavnapi.herokuapp.com/result/?query=https://www.jiosaavn.com/s/playlist/fd15cad99c0fdf20e82c2bc80969d2fb/Starred_Songs/FvETLEV5fINFo9wdEAzFBA__", true);
-  let link = prompt("Enter Link", "Harry Potter");
+  // xhttp.open("GET", "https://mysaavnapi.herokuapp.com/result/?query=https://www.jiosaavn.com/s/playlist/fd15cad99c0fdf20e82c2bc80969d2fb/Gazal/GGvPNWTD1tFYufGtEEFmDA__", true);
+  let link = prompt("Enter Link", "https://www.jiosaavn.com/s/playlist/fd15cad99c0fdf20e82c2bc80969d2fb/Gazal/GGvPNWTD1tFYufGtEEFmDA__");
   xhttp.open("GET", "https://mysaavnapi.herokuapp.com/result/?query="+link, true);
   xhttp.send();
 }
@@ -57,7 +58,9 @@ function random_bg_color() {
 function loadTrack(track_index) {
   clearInterval(updateTimer);
   resetValues();
-  curr_track.src = mySongs[track_index].media_url;
+  // curr_track.src = mySongs[track_index].media_url.replace("_160.mp4", "_320.mp4");
+  curr_track.src = mySongs[track_index].media_url
+  // console.log(curr_track.src)
   curr_track.load();
 
   track_art.style.backgroundImage = "url(" + mySongs[track_index].image + ")";
@@ -69,6 +72,42 @@ function loadTrack(track_index) {
   curr_track.addEventListener("ended", nextTrack);
   random_bg_color();
 }
+
+// ===================
+function mediaSessionStart() {
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: mySongs[track_index].album,
+    artist: mySongs[track_index].music,
+    // album: 'MainStay',
+    artwork: [
+      { src: mySongs[track_index].image.replace("500x500.jpg", "150x150.jpg"), sizes: '150x150', type: 'image/png' }
+    ]
+  });
+
+  navigator.mediaSession.setActionHandler('pause', () => {
+    playpauseTrack();
+  });
+  navigator.mediaSession.setActionHandler('play', () => {
+    playpauseTrack()
+  });
+
+  navigator.mediaSession.setActionHandler('seekbackward', (details) => {
+    audio.currentTime = audio.currentTime - (details.seekOffset || 10);
+  });
+
+  navigator.mediaSession.setActionHandler('seekforward', (details) => {
+    audio.currentTime = audio.currentTime + (details.seekOffset || 10);
+  });
+
+  navigator.mediaSession.setActionHandler('previoustrack', () => {
+    prevTrack()
+  });
+
+  navigator.mediaSession.setActionHandler('nexttrack', () => {
+    nextTrack()
+  });
+}
+// ===================
 
 function resetValues() {
   curr_time.textContent = "00:00";
@@ -143,4 +182,3 @@ function seekUpdate() {
     total_duration.textContent = durationMinutes + ":" + durationSeconds;
   }
 }
-
