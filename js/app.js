@@ -28,15 +28,17 @@ function getJson() {
       //  document.getElementById("demo").innerHTML = this.responseText.songs;
       myArray = this.responseText;
       myJson = JSON.parse(myArray);
-      mySongs = myJson.songs;
+      // mySongs = myJson.songs;
+      mySongs = myJson.list;
       loadTrack(track_index);
       mediaSessionStart()
 
     }
   };
   // xhttp.open("GET", "https://mysaavnapi.herokuapp.com/result/?query=https://www.jiosaavn.com/s/playlist/fd15cad99c0fdf20e82c2bc80969d2fb/Gazal/GGvPNWTD1tFYufGtEEFmDA__", true);
-  let link = prompt("Enter Link", "https://www.jiosaavn.com/s/playlist/fd15cad99c0fdf20e82c2bc80969d2fb/Gazal/GGvPNWTD1tFYufGtEEFmDA__");
-  xhttp.open("GET", "https://mysaavnapi.herokuapp.com/result/?query="+link, true);
+  let link = prompt("Enter Link", "https://www.jiosaavn.com/api.php?__call=webapi.get&token=GGvPNWTD1tFYufGtEEFmDA__&type=playlist&p=1&n=50&includeMetaTags=0&ctx=web6dot0&api_version=4&_format=json&_marker=0");
+  link = encodeURIComponent(link)
+  xhttp.open("GET", "https://bizzcard.info/saavnapi/?urll=" + link, true);
   xhttp.send();
 }
 getJson()
@@ -55,11 +57,31 @@ function random_bg_color() {
   document.body.style.background = bgColor;
 }
 
+function decodeURL(encryptedMediaUrl) {
+  // var encryptedMediaUrl = "ID2ieOjCrwfgWvL5sXl4B1ImC5QfbsDyPWnb3SDh+33hBRUVAyh8rpVMNy6UZZqPxV695BkpJaBHkm5jxu2nIBw7tS9a8Gtq";
+
+  const key = "38346591";
+
+  const decrypted = CryptoJS.DES.decrypt(
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    { ciphertext: CryptoJS.enc.Base64.parse(encryptedMediaUrl) },
+    CryptoJS.enc.Utf8.parse(key),
+    { mode: CryptoJS.mode.ECB }
+  );
+
+  const decryptedLink = decrypted.toString(CryptoJS.enc.Utf8);
+  return decryptedLink;
+  // console.log(decryptedLink)
+}
+
 function loadTrack(track_index) {
   clearInterval(updateTimer);
   resetValues();
   // curr_track.src = mySongs[track_index].media_url.replace("_160.mp4", "_320.mp4");
-  curr_track.src = mySongs[track_index].media_url
+  encrypted_url = mySongs[track_index].more_info.encrypted_media_url;
+  curr_track.src = decodeURL(encrypted_url);
+  console.log(curr_track.src)
   // console.log(curr_track.src)
   curr_track.load();
 
